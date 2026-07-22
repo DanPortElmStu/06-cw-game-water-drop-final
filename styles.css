@@ -18,6 +18,34 @@ Fonts:
 
 */
 
+/* Self-host Proxima Nova (place WOFF/WOFF2 files in /fonts/) */
+/*
+    Due to licensing Proxima Nova font files are not included.
+    Add font files to /fonts/ with these names (or update paths):
+        - ProximaNova-Regular.woff2
+        - ProximaNova-Bold.woff2
+    The FontFaceObserver script will detect the font when available.
+*/
+
+@font-face {
+        font-family: 'Proxima Nova';
+        src: url('fonts/ProximaNova-Regular.woff2') format('woff2'),
+                 url('fonts/ProximaNova-Regular.woff') format('woff');
+        font-weight: 400;
+        font-style: normal;
+        font-display: swap;
+}
+
+@font-face {
+        font-family: 'Proxima Nova';
+        src: url('fonts/ProximaNova-Bold.woff2') format('woff2'),
+                 url('fonts/ProximaNova-Bold.woff') format('woff');
+        font-weight: 700;
+        font-style: normal;
+        font-display: swap;
+}
+
+
 * {
     margin: 0;
     padding: 0;
@@ -26,11 +54,22 @@ Fonts:
 
 body {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
     min-height: 100vh;
     background: linear-gradient(180deg, #E6F7FF 0%, #FFFFFF 40%, #F0F0F0 100%);
-    font-family: "Avenir", "Proxima Nova", Arial, sans-serif;
+    padding-bottom: 24px; /* space between footer and bottom of viewport */
+    font-family: "Proxima Nova", "Avenir", Arial, sans-serif;
+}
+
+/* Ensure Proxima Nova is used for all textual elements */
+html.font-loaded, html.font-loading, html.font-failed {
+    font-family: "Proxima Nova", "Avenir", Arial, sans-serif;
+}
+
+/* Fallback: apply to common elements to ensure consistent appearance */
+body, p, h1, h2, h3, h4, h5, h6, a, button, input, textarea, label, span, div {
+    font-family: inherit;
 }
 
 .game-wrapper {
@@ -94,6 +133,36 @@ body {
     transform: translateY(-1px);
 }
 
+.difficulty-panel {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-left: 8px;
+}
+
+.difficulty-btn {
+    padding: 8px 12px;
+    background-color: #FFFFFF;
+    color: #131313;
+    border: 2px solid #2E9DF7;
+    border-radius: 999px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 700;
+    transition: background-color 0.15s ease, transform 0.12s ease;
+}
+
+.difficulty-btn:hover {
+    background-color: #E6F7FF;
+    transform: translateY(-1px);
+}
+
+.difficulty-btn.active {
+    background-color: #2E9DF7;
+    color: #FFFFFF;
+    border-color: #2E9DF7;
+}
+
 .score {
     flex: 0 1 auto;  /* Don't grow, can shrink, auto basis */
     font-size: 24px;
@@ -136,6 +205,19 @@ body {
     margin-bottom: 8px;
     text-align: center;
     max-width: 85vw;
+}
+
+/* Explicitly ensure the main title and tagline use Proxima Nova */
+.game-title, .game-tagline {
+    font-family: "Proxima Nova", "Avenir", Arial, sans-serif;
+}
+
+.game-title {
+    font-weight: 700;
+}
+
+.game-tagline {
+    font-weight: 400;
 }
 
 @keyframes dropFall {
@@ -237,5 +319,81 @@ body {
 @media (max-width: 850px) {
     .game-message {
         width: 95vw;
+    }
+}
+
+/* Footer styling */
+.site-footer {
+    width: min(760px, 95vw);
+    margin-top: auto;
+    padding: 14px 18px;
+    background-color: #FFFFFF;
+    border: 2px solid #2E9DF7;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    box-shadow: 0 6px 18px rgba(46,157,247,0.06);
+}
+
+.footer-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.footer-logo {
+    width: 64px;
+    height: auto;
+    display: block;
+}
+
+.footer-text {
+    color: #131313;
+    font-size: 16px;
+}
+
+.footer-links {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.footer-links a {
+    padding: 8px 12px;
+    background-color: #FFFFFF;
+    color: #2E9DF7;
+    border: 2px solid transparent;
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 700;
+    transition: background-color 0.15s ease, color 0.15s ease, transform 0.12s ease;
+}
+
+.footer-links a:hover {
+    background-color: #E6F7FF;
+    transform: translateY(-1px);
+}
+
+.footer-links .donate-link {
+    background-color: #FFC907;
+    color: #131313;
+    border: 2px solid #FF902A;
+}
+
+@media (max-width: 650px) {
+    .site-footer {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    .footer-left {
+        justify-content: center;
+    }
+
+    .footer-links {
+        justify-content: center;
     }
 }

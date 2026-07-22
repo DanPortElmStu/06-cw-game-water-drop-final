@@ -5,11 +5,23 @@ let timerInterval; // Timer for countdown
 let score = 0;
 let timeLeft = 30;
 
+// Difficulty mode state
+let selectedMode = "Normal";
+const modes = {
+  Easy: { spawnInterval: 1400, dropDuration: 5 },
+  Normal: { spawnInterval: 1000, dropDuration: 4 },
+  Hard: { spawnInterval: 700, dropDuration: 3 }
+};
+let currentDropDuration = modes[selectedMode].dropDuration;
+
 const scoreEl = document.getElementById("score");
 const timeEl = document.getElementById("time");
 const gameContainer = document.getElementById("game-container");
 const messageEl = document.getElementById("message");
 const startBtn = document.getElementById("start-btn");
+
+// difficulty buttons (added to DOM in index.html)
+const difficultyButtons = document.querySelectorAll(".difficulty-btn");
 
 const winMessages = [
   "Great job! You caught plenty of drops!",
@@ -28,6 +40,24 @@ const loseMessages = [
 // Wait for button click to start the game
 document.getElementById("start-btn").addEventListener("click", startGame);
 
+// Wire up difficulty buttons
+difficultyButtons.forEach((btn) => {
+  btn.addEventListener("click", () => setMode(btn.dataset.mode));
+});
+
+function setMode(mode) {
+  if (!modes[mode]) return;
+  selectedMode = mode;
+  currentDropDuration = modes[selectedMode].dropDuration;
+  difficultyButtons.forEach((b) => b.classList.toggle("active", b.dataset.mode === mode));
+
+  // If game is running, restart drop maker with new interval so changes take effect immediately
+  if (gameRunning && dropMaker) {
+    clearInterval(dropMaker);
+    dropMaker = setInterval(createDrop, modes[selectedMode].spawnInterval);
+  }
+}
+
 function startGame() {
   if (gameRunning) return;
 
@@ -43,7 +73,7 @@ function startGame() {
   startBtn.textContent = "Game Running...";
 
   // Create new drops every second
-  dropMaker = setInterval(createDrop, 1000);
+  dropMaker = setInterval(createDrop, modes[selectedMode].spawnInterval);
 
   // Countdown timer
   timerInterval = setInterval(() => {
@@ -68,7 +98,7 @@ function createDrop() {
   const gameWidth = gameContainer.offsetWidth;
   const xPosition = Math.random() * Math.max(0, gameWidth - size);
   drop.style.left = `${xPosition}px`;
-  drop.style.animationDuration = "4s";
+  drop.style.animationDuration = `${currentDropDuration}s`;
 
   drop.addEventListener("click", () => {
     if (!gameRunning) return;
