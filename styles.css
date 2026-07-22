@@ -1,0 +1,241 @@
+/* Charity: water Brand Colors & Fonts
+
+Primary Colors:
+- Yellow:     #FFC907
+- Blue:       #2E9DF7
+
+Secondary Colors:
+- Light Blue: #8BD1CB
+- Green:      #4FCB53
+- Orange:     #FF902A
+- Red:        #F5402C
+- Dark Green: #159A48
+- Pink:       #F16061
+
+Fonts:
+- Proxima Nova
+- Avenir
+
+*/
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(180deg, #E6F7FF 0%, #FFFFFF 40%, #F0F0F0 100%);
+    font-family: "Avenir", "Proxima Nova", Arial, sans-serif;
+}
+
+.game-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 24px;
+}
+
+.brand-logo {
+    width: 280px;
+    max-width: 90%;
+    margin-bottom: 8px;
+}
+
+.score-panel {
+    display: flex;
+    justify-content: space-between;  /* Space between score and button */
+    align-items: center;
+    width: min(760px, 95vw);
+    padding: 16px 18px;
+    background-color: #FFFFFF;
+    border: 2px solid #2E9DF7;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(46, 157, 247, 0.08);
+}
+
+.timer {
+    flex: 0 1 auto;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+#game-container {
+    width: 760px;
+    height: 560px;
+    background: radial-gradient(circle at top, #D9F2FF 0%, #E6F7FF 40%, #BEE4FA 100%);
+    border: 3px solid #2E9DF7;
+    border-radius: 16px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: inset 0 0 40px rgba(46, 157, 247, 0.08);
+}
+
+
+#start-btn {
+    padding: 12px 20px;
+    background-color: #FFC907;
+    color: #131313;
+    border: 2px solid #FF902A;
+    border-radius: 999px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 700;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+#start-btn:hover {
+    background-color: #FF902A;
+    transform: translateY(-1px);
+}
+
+.score {
+    flex: 0 1 auto;  /* Don't grow, can shrink, auto basis */
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.water-drop {
+    position: absolute;
+    width: 60px;  /* increased from 40px */
+    height: 60px; /* increased from 40px */
+    background-color: #0099ff;
+    border-radius: 50%;
+    animation: dropFall linear forwards;
+    transform-origin: center;
+    cursor: pointer;
+    padding: 15px;  /* Add padding for larger click area */
+    margin: -15px;  /* Offset padding to maintain visual size */
+    transition: transform 0.1s ease;  /* Smooth hover effect */
+}
+
+.water-drop:hover {
+    transform: scale(1.1);  /* Slight grow effect on hover */
+}
+
+.bad-drop {
+    background-color: #ff4444;
+}
+
+.game-title {
+    color: #131313;
+    font-size: 38px;
+    margin-top: 0;
+    margin-bottom: 2px;
+    text-align: center;
+}
+
+.game-tagline {
+    color: #666;
+    font-size: 18px;
+    margin-bottom: 8px;
+    text-align: center;
+    max-width: 85vw;
+}
+
+@keyframes dropFall {
+    from {
+        transform: translateY(-20px);
+    }
+    to {
+        transform: translateY(600px);
+    }
+}
+
+@media (max-width: 850px) {
+    .game-wrapper, .score-panel, #game-container {
+        width: 95vw;
+    }
+    
+    #game-container {
+        height: 70vh;
+    }
+}
+
+@media (max-width: 650px) {
+    .game-wrapper {
+        gap: 16px;
+        padding: 16px;
+    }
+
+    .score-panel {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+        padding: 14px;
+    }
+
+    .timer,
+    .score {
+        font-size: 20px;
+    }
+
+    #start-btn {
+        width: 100%;
+        font-size: 16px;
+    }
+
+    #game-container {
+        height: 62vh;
+    }
+
+    .game-title {
+        font-size: 36px;
+    }
+
+    .game-tagline {
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 500px) {
+    body {
+        padding: 12px 0;
+    }
+
+    .brand-logo {
+        width: 220px;
+    }
+
+    .score-panel {
+        padding: 12px;
+    }
+
+    #start-btn {
+        padding: 10px 14px;
+    }
+
+    #game-container {
+        height: 55vh;
+    }
+
+    .game-title {
+        font-size: 32px;
+    }
+
+    .game-tagline {
+        font-size: 14px;
+    }
+}
+
+.game-message {
+    width: min(760px, 95vw);
+    min-height: 50px;
+    margin-top: 16px;
+    padding: 12px 16px;
+    color: #131313;
+    font-size: 20px;
+    text-align: center;
+    display: none;
+}
+
+@media (max-width: 850px) {
+    .game-message {
+        width: 95vw;
+    }
+}
